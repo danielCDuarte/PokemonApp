@@ -7,6 +7,11 @@
 
 import Foundation
 
+struct APIPokemon: Codable {
+    let name: String
+    let url: String
+}
+
 struct APIPokemonsResponse: Codable {
     let count: Int
     let next: String

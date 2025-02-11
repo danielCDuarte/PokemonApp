@@ -36,4 +36,33 @@ struct TestDataConstants {
                 )
             ])
     }()
+    
+    static let detailResponse: APIDetailResponse = {
+        .init(
+            id: 1,
+            name: "bulbasaur",
+            height: 7,
+            weight: 69,
+            abilities: [
+                .init(
+                    ability: .init(
+                        name: "overgrow",
+                        url: "https://pokeapi.co/api/v2/ability/65/"
+                    ),
+                    isHidden: false,
+                    slot: 1
+                )
+            ],
+            stats: [
+                .init(
+                    stat: .init(
+                        name: "hp",
+                        url: "https://pokeapi.co/api/v2/stat/1/"
+                    ),
+                    baseStat: 45,
+                    effort: 0
+                )
+            ]
+        )
+    }()
 }
