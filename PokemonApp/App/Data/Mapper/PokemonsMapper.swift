@@ -16,14 +16,15 @@ struct PokemonsMapper: MapperType {
         return .init(
             count: input.count,
             next: input.next,
-            results: input.results.map {
-                getPokemon(input: $0)
+            results: input.results.enumerated().map { index, item in
+                getPokemon(index: index + 1, input: item)
             }
         )
     }
     
-    private static func getPokemon(input: APIPokemon) -> PokemonObject {
+    private static func getPokemon(index: Int, input: APIPokemon) -> PokemonObject {
         return .init(
+            id: index,
             name: input.name,
             url: input.url
         )

@@ -15,7 +15,7 @@ struct DataConstants {
     enum InnerConstants {
         static let applicationJson: String = "application/json"
     }
-    struct Image {
+    struct Images {
         static let getSprite: String = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/%d.png"
         static let getOfficialArtwork: String = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/%d.png"
     }
