@@ -14,10 +14,12 @@ struct PokemonDetailMapper: MapperType {
     
     static func map(input: APIDetailResponse) -> DetailObject {
         return .init(
-            id: input.id,
-            name: input.name,
-            height: input.height,
-            weight: input.weight,
+            info: .init(
+                id: input.id,
+                name: input.name,
+                height: input.height,
+                weight: input.weight
+            ),
             abilities: input.abilities.map {
                 getAbility(input: $0)
             },

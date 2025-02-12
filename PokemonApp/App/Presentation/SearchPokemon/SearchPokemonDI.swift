@@ -21,11 +21,11 @@ final public class SearchPokemonDI {
         
         //Domain
         let getPokemonsUseCase = GetPokemonsUseCase(repository: pokemonRepository)
+        
+        //Presentation
         let presenterDependencies = SearchPokemonPresenter.InputDependencies(
             getPokemonsUseCase: getPokemonsUseCase
         )
-        
-        //Presentation
         let presenter = SearchPokemonPresenter(dependencies: presenterDependencies)
         let SearchPokemonViewController = SearchPokemonViewController()
         SearchPokemonViewController.presenter = presenter

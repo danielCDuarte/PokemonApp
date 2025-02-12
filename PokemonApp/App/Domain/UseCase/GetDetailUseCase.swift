@@ -7,14 +7,14 @@
 
 import Foundation
 
-class GetDetailUseCase: AnyUseCase< String, DetailObject> {
+class GetDetailUseCase: AnyUseCase< Int, DetailObject> {
     let repository: PokemonRepositoriesType
     
     init(repository: PokemonRepositoriesType) {
         self.repository = repository
     }
     
-    override func execute(params: String) async throws -> DetailObject {
+    override func execute(params: Int) async throws -> DetailObject {
         do {
             return try await repository.getDetails(params)
         } catch {

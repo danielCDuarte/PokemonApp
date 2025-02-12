@@ -8,7 +8,7 @@
 import Foundation
 
 protocol DetailPokemonViewType: BaseView {
-    func showCharacter(_ detail: DetailObject)
+    func showDetail(_ detail: DetailObject)
 }
 
 protocol DetailPokemonPresenterType: BasePresenterProtocol {

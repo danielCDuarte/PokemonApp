@@ -33,10 +33,10 @@ class PokemonRepositories: PokemonRepositoriesType {
         }
     }
     
-    func getDetails(_ id: String) async throws -> DetailObject {
+    func getDetails(_ id: Int) async throws -> DetailObject {
         let endPoint = NetworkRequest<APIDetailResponse>(
             method: .GET,
-            relativePath: id,
+            relativePath: "\(id)",
             parameters: nil
         )
         do {

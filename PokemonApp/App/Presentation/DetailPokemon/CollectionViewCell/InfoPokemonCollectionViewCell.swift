@@ -1,5 +1,5 @@
 //
-//  PokemonCollectionViewCell.swift
+//  InfoPokemonCollectionViewCell.swift
 //  PokemonApp
 //
 //  Created by Daniel Crespo Duarte on 12/02/25.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class PokemonCollectionViewCell: UICollectionViewCell {
+final class InfoPokemonCollectionViewCell: UICollectionViewCell {
     
     private lazy var containterView: UIView = {
         let view = UIView()
@@ -16,17 +16,17 @@ final class PokemonCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
-    private lazy var horizontalStackview: UIStackView = {
+    private lazy var verticalStackview: UIStackView = {
         let stackview = UIStackView()
         stackview.translatesAutoresizingMaskIntoConstraints = false
-        stackview.axis = .horizontal
+        stackview.axis = .vertical
         stackview.alignment = .fill
-        stackview.distribution = .fillProportionally
+        stackview.distribution = .fill
         stackview.spacing = 10
         return stackview
     }()
     
-    private lazy var iconImageView: UIImageView = {
+    private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
@@ -37,7 +37,16 @@ final class PokemonCollectionViewCell: UICollectionViewCell {
     
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 14, weight: .bold)
+        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var measurementLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 16)
+        label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -54,11 +63,11 @@ final class PokemonCollectionViewCell: UICollectionViewCell {
     
     private func setupConstraints() {
         setupContainerViewConstraints()
-        containterView.addSubview(horizontalStackview)
-        setupHorizontalStackviewConstraints()
-        horizontalStackview.addArrangedSubview(iconImageView)
-        setupIconImageViewContraints()
-        horizontalStackview.addArrangedSubview(nameLabel)
+        setupVerticalStackviewConstraints()
+        verticalStackview.addArrangedSubview(imageView)
+        setupImageViewConstraints()
+        verticalStackview.addArrangedSubview(nameLabel)
+        verticalStackview.addArrangedSubview(measurementLabel)
     }
     
     private func setupContainerViewConstraints() {
@@ -71,35 +80,32 @@ final class PokemonCollectionViewCell: UICollectionViewCell {
         ])
     }
     
-    private func setupHorizontalStackviewConstraints() {
+    private func setupVerticalStackviewConstraints() {
+        containterView.addSubview(verticalStackview)
         NSLayoutConstraint.activate([
-            horizontalStackview.topAnchor.constraint(equalTo: containterView.topAnchor, constant: 10),
-            horizontalStackview.leadingAnchor.constraint(equalTo: containterView.leadingAnchor, constant: 10),
-            horizontalStackview.trailingAnchor.constraint(equalTo: containterView.trailingAnchor, constant: -10),
-            horizontalStackview.bottomAnchor.constraint(equalTo: containterView.bottomAnchor, constant: -10)
+            verticalStackview.topAnchor.constraint(equalTo: containterView.topAnchor, constant: 10),
+            verticalStackview.leadingAnchor.constraint(equalTo: containterView.leadingAnchor, constant: 10),
+            verticalStackview.trailingAnchor.constraint(equalTo: containterView.trailingAnchor, constant: -10),
+            verticalStackview.bottomAnchor.constraint(equalTo: containterView.bottomAnchor, constant: -10)
         ])
     }
     
-    private func setupIconImageViewContraints() {
+    private func setupImageViewConstraints() {
         NSLayoutConstraint.activate([
-            iconImageView.widthAnchor.constraint(equalToConstant: 60),
-            iconImageView.heightAnchor.constraint(equalToConstant: 60)
+            imageView.heightAnchor.constraint(equalToConstant: 150),
+            imageView.widthAnchor.constraint(equalToConstant: 150)
         ])
     }
     
     private func setupUI() {
-        containterView.setShadow(
-            opacity: 0.1,
-            offset: CGSize(width: 0, height: 2),
-            radius: 12,
-            color: UIColor.black.cgColor
-        )
         nameLabel.textColor = .darkGray
+        measurementLabel.textColor = .lightGray
     }
     
-    func setup(with pokemon: PokemonObject) {
-        nameLabel.text = pokemon.name.capitalized
-        setupImage(with: String(format: DataConstants.Images.getSprite, pokemon.id))
+    func setup(with InfoDetailPokemon: InfoDetailObject) {
+        nameLabel.text = InfoDetailPokemon.name.capitalized
+        measurementLabel.text = "Height: \(InfoDetailPokemon.height)  Weight: \(InfoDetailPokemon.weight)"
+        setupImage(with: String(format: DataConstants.Images.getOfficialArtwork, InfoDetailPokemon.id))
     }
     
     private func setupImage(with url: String) {
@@ -107,8 +113,8 @@ final class PokemonCollectionViewCell: UICollectionViewCell {
         Task { [weak self] in
             guard let self = self else { return }
             do {
-                if let image = try await iconImageView.downloadImage(from: urlValidate) {
-                    self.iconImageView.image = image
+                if let image = try await imageView.downloadImage(from: urlValidate) {
+                    self.imageView.image = image
                 }
             } catch {
                 print("Error loading image: \(error)")

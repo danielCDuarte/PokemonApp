@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct AbilityDetailObject {
+struct AbilityDetailObject: Hashable {
     let name: String
     let url: String
 }
 
-struct AbilityObject {
+struct AbilityObject: Hashable {
     let ability: AbilityDetailObject
     let isHidden: Bool
     let slot: Int

@@ -67,10 +67,19 @@ class SearchPokemonPresenter: BasePresenter {
 
 extension SearchPokemonPresenter: SearchPokemonPresenterType {
     func didSelectPokemonAt(indexPath: IndexPath) {
-        if pokemons.indices.contains(indexPath.row) {
-            let pokemon = pokemons[indexPath.row]
-            ownView.pushToPokemon(pokemon)
+        var pokemonSelected: PokemonObject?
+        if isSearching {
+            if filteredPokemons.indices.contains(indexPath.row) {
+                pokemonSelected = filteredPokemons[indexPath.row]
+            }
+        } else {
+            if pokemons.indices.contains(indexPath.row) {
+                pokemonSelected = pokemons[indexPath.row]
+            }
         }
+        guard let validatePokemonSelected = pokemonSelected else { return }
+        ownView.pushToPokemon(validatePokemonSelected)
+        
     }
     
     func didSearchPokemon(_ text: String) {

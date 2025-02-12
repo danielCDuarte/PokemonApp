@@ -9,5 +9,5 @@ import Foundation
 
 protocol PokemonRepositoriesType {
     func getPokemons(with offset: Int, limit: Int) async throws  -> PokemonsObject
-    func getDetails(_ id: String)  async throws  -> DetailObject
+    func getDetails(_ id: Int)  async throws  -> DetailObject
 }

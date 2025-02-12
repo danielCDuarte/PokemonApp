@@ -7,11 +7,15 @@
 
 import Foundation
 
-struct DetailObject {
+struct InfoDetailObject: Hashable {
     let id: Int
     let name: String
     let height: Int
     let weight: Int
+}
+
+struct DetailObject: Hashable {
+    let info :InfoDetailObject
     let abilities: [AbilityObject]
     let stats: [StatObject]
 }
