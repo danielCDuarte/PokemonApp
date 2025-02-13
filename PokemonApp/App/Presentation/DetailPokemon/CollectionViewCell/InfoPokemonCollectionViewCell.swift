@@ -7,7 +7,12 @@
 
 import UIKit
 
-final class InfoPokemonCollectionViewCell: UICollectionViewCell {
+final class InfoPokemonCollectionViewCell: GenericCollectionViewCell<InfoDetailObject> {
+    
+    private struct Constants {
+        static let height: String = "Height"
+        static let weight: String = "Weight"
+    }
     
     private lazy var containterView: UIView = {
         let view = UIView()
@@ -64,9 +69,9 @@ final class InfoPokemonCollectionViewCell: UICollectionViewCell {
     private func setupConstraints() {
         setupContainerViewConstraints()
         setupVerticalStackviewConstraints()
+        verticalStackview.addArrangedSubview(nameLabel)
         verticalStackview.addArrangedSubview(imageView)
         setupImageViewConstraints()
-        verticalStackview.addArrangedSubview(nameLabel)
         verticalStackview.addArrangedSubview(measurementLabel)
     }
     
@@ -102,10 +107,10 @@ final class InfoPokemonCollectionViewCell: UICollectionViewCell {
         measurementLabel.textColor = .lightGray
     }
     
-    func setup(with InfoDetailPokemon: InfoDetailObject) {
-        nameLabel.text = InfoDetailPokemon.name.capitalized
-        measurementLabel.text = "Height: \(InfoDetailPokemon.height)  Weight: \(InfoDetailPokemon.weight)"
-        setupImage(with: String(format: DataConstants.Images.getOfficialArtwork, InfoDetailPokemon.id))
+    override func setup(with item: InfoDetailObject) {
+        nameLabel.text = item.name.capitalized
+        measurementLabel.text = "\(Constants.height): \(item.height)  \(Constants.weight): \(item.weight)"
+        setupImage(with: String(format: DataConstants.Images.getOfficialArtwork, item.id))
     }
     
     private func setupImage(with url: String) {

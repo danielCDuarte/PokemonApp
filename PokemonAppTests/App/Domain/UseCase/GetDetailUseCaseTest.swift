@@ -35,7 +35,7 @@ class GetDetailUseCaseTest: XCTestCase {
         
         //When
         do {
-            let response = try await sut.execute(params: "1")
+            let response = try await sut.execute(params: 1)
             // Then
             XCTAssertFalse(response.abilities.isEmpty)
             expectation.fulfill()
@@ -57,7 +57,7 @@ class GetDetailUseCaseTest: XCTestCase {
         
         //When
         do {
-            _ = try await sut.execute(params: "1")
+            _ = try await sut.execute(params: 1)
             expectation.fulfill()
         } catch let error {
             // Then

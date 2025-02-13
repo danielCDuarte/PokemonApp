@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct APIStatDetailObject: Hashable{
+struct StatDetailObject: Hashable {
     let name: String
     let url: String
 }
 
 struct StatObject: Hashable {
-    let stat: APIStatDetailObject
+    let stat: StatDetailObject
     let baseStat: Int
     let effort: Int
 }

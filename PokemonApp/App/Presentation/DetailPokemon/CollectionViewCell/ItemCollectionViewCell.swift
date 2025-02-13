@@ -7,7 +7,12 @@
 
 import UIKit
 
-final class ItemCollectionViewCell: UICollectionViewCell {
+struct ItemCollectionObject {
+    var title: String
+    var value: String? = nil
+}
+
+final class ItemCollectionViewCell: GenericCollectionViewCell<ItemCollectionObject> {
     
     private lazy var containterView: UIView = {
         let view = UIView()
@@ -82,10 +87,10 @@ final class ItemCollectionViewCell: UICollectionViewCell {
         titleLabel.textColor = .lightGray
         valueLabel.textColor = .lightGray
     }
-
-    func setup(with title: String, value: String? = nil) {
-        titleLabel.text = title
-        valueLabel.text = value
+    
+    override func setup(with item: ItemCollectionObject) {
+        titleLabel.text = item.title.capitalized
+        valueLabel.text = item.value
     }
     
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {

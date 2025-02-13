@@ -11,8 +11,9 @@ class SectionHeaderCollectionViewCell: UICollectionReusableView {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         label.textColor = .black
+        label.textAlignment = .center
         return label
     }()
     
@@ -29,9 +30,10 @@ class SectionHeaderCollectionViewCell: UICollectionReusableView {
         addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: topAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
+            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
     

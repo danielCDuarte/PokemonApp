@@ -14,9 +14,12 @@ enum Section: Int, CaseIterable {
     
     var title: String? {
         switch self {
-        case .header: return nil
-        case .abilities: return "ABILITIES"
-        case .stats: return "STATS"
+        case .header:
+            return nil
+        case .abilities:
+            return "Abilitites"
+        case .stats: 
+            return "Stats"
         }
     }
 }
@@ -78,7 +81,10 @@ class DetailPokemonViewController: BaseViewController {
         collectionView.delegate = self
         collectionView.register(cellWithClass: InfoPokemonCollectionViewCell.self)
         collectionView.register(cellWithClass: ItemCollectionViewCell.self)
-        collectionView.register(SectionHeaderCollectionViewCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
+        collectionView.register(
+            SectionHeaderCollectionViewCell.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader
+        )
     }
     
     private func setupUI() {
@@ -92,7 +98,6 @@ class DetailPokemonViewController: BaseViewController {
                 return self?.cell(for: indexPath, item: item, collectionView: collectionView)
             }
         )
-        
         dataSource?.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
             return self?.supplementaryView(for: indexPath, kind: kind, collectionView: collectionView)
         }
@@ -117,7 +122,9 @@ class DetailPokemonViewController: BaseViewController {
                     withReuseIdentifier: String(describing: ItemCollectionViewCell.self),
                     for: indexPath
                   ) as? ItemCollectionViewCell else { return nil }
-            cell.setup(with: ability.ability.name)
+            cell.setup(with: .init(
+                title: ability.ability.name)
+            )
             return cell
             
         case .stats:
@@ -126,7 +133,10 @@ class DetailPokemonViewController: BaseViewController {
                     withReuseIdentifier: String(describing: ItemCollectionViewCell.self),
                     for: indexPath
                   ) as? ItemCollectionViewCell else { return nil }
-            cell.setup(with: stat.stat.name, value: "\(stat.effort)")
+            cell.setup(with: .init(
+                title: stat.stat.name,
+                value: "\(stat.baseStat)")
+            )
             return cell
         }
     }
@@ -139,9 +149,11 @@ class DetailPokemonViewController: BaseViewController {
         guard kind == UICollectionView.elementKindSectionHeader,
               let section = Section(rawValue: indexPath.section),
               let title = section.title else { return nil }
-        
-        let headerView = collectionView.dequeueReusableHeaderFooterView(kind: kind, withClass: SectionHeaderCollectionViewCell.self, for: indexPath)
-        
+        let headerView = collectionView.dequeueReusableHeaderFooterView(
+            kind: kind,
+            withClass: SectionHeaderCollectionViewCell.self,
+            for: indexPath
+        )
         headerView.setup(with: title)
         return headerView
     }
@@ -149,16 +161,9 @@ class DetailPokemonViewController: BaseViewController {
 }
 
 extension DetailPokemonViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        UICollectionReusableView()
-    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        let indexPath = IndexPath(row: 0, section: section)
-        let headerView = self.collectionView(collectionView, viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader, at: indexPath)
-        return headerView.systemLayoutSizeFitting(CGSize(width: collectionView.frame.width, height: UIView.layoutFittingExpandedSize.height),
-            withHorizontalFittingPriority: .required,
-            verticalFittingPriority: .fittingSizeLevel)
+        guard let title = Section(rawValue: section)?.title else { return .zero }
+        return CGSize(width: collectionView.frame.width, height: title.isEmpty ? 0 : 40)
     }
 }
 
@@ -170,7 +175,6 @@ extension DetailPokemonViewController: DetailPokemonViewType {
         snapshot.appendItems([.header(detail.info)], toSection: .header)
         snapshot.appendItems(detail.abilities.map { .ability($0) }, toSection: .abilities)
         snapshot.appendItems(detail.stats.map { .stat($0) }, toSection: .stats)
-        
         dataSource?.apply(snapshot, animatingDifferences: false)
     }
 }

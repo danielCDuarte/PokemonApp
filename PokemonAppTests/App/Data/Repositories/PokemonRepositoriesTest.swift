@@ -84,7 +84,7 @@ final class PokemonRepositoriesTest: XCTestCase {
         //When
         do {
             // then
-            let response = try await sut.getDetails("1")
+            let response = try await sut.getDetails(1)
             XCTAssertNotNil(response)
             successExpectation.fulfill()
             
@@ -107,7 +107,7 @@ final class PokemonRepositoriesTest: XCTestCase {
         
         //When
         do {
-            _ = try await sut.getDetails("1")
+            _ = try await sut.getDetails(1)
             expectation.fulfill()
         } catch let error {
             // then

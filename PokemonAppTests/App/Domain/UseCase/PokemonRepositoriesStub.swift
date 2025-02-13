@@ -24,7 +24,7 @@ extension PokemonRepositoriesStub: PokemonRepositoriesType {
         return data!
     }
     
-    func getDetails(_ id: String) async throws -> DetailObject {
+    func getDetails(_ id: Int) async throws -> DetailObject {
         let data = PokemonRepositoriesStub.reponseDetail
         if let error = PokemonRepositoriesStub.error {
             throw error

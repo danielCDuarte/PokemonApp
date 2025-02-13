@@ -11,7 +11,7 @@ class SearchPokemonPresenter: BasePresenter {
     
     private var pokemons: [PokemonObject] = []
     private var filteredPokemons: [PokemonObject] = []
-    private var isSearching: Bool = false
+    var isSearching: Bool = false
     
     private struct Constants {
         static let offset: Int = 0
