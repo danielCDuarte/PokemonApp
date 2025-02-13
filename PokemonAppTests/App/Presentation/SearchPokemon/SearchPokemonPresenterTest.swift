@@ -34,7 +34,7 @@ final class SearchPokemonPresenterTest: XCTestCase {
         super.tearDown()
     }
     
-    func testPokemons_WhenThereisSuccess_ThenCallShowSections() {
+    func testGetPokemons_WhenThereisSuccess_ThenCallShowSections() {
         // Given
         let expectation = XCTestExpectation(description: "Get Pokemons")
         var isCallShowSections = false
