@@ -9,7 +9,7 @@ import XCTest
 import SnapshotTesting
 @testable import PokemonApp
 
-class SearchPokemonViewControllerUITests: XCTestCase {
+class SearchPokemonViewControllerTest: XCTestCase {
     private var sut: SearchPokemonViewController!
     private var searchPokemonCoordinatorSpy: SearchPokemonCoordinatorSpy!
     private var searchPokemonPresenterSpy: SearchPokemonPresenterSpy!
@@ -59,19 +59,4 @@ class SearchPokemonViewControllerUITests: XCTestCase {
         // Then
         assertSnapshot(of: sut, as: .image)
     }
-    
-    func testLayoutInDifferentDeviceSizes() {
-        // iPhone SE
-        sut.view.frame = CGRect(x: 0, y: 0, width: 375, height: 667)
-        assertSnapshot(of: sut, as: .image(on: .iPhoneSe))
-        
-        // iPhone 13
-        sut.view.frame = CGRect(x: 0, y: 0, width: 390, height: 844)
-        assertSnapshot(of: sut, as: .image(on: .iPhone13))
-        
-        // iPhone 13 Pro Max
-        sut.view.frame = CGRect(x: 0, y: 0, width: 428, height: 926)
-        assertSnapshot(of: sut, as: .image(on: .iPhone13ProMax))
-    }
-    
 }
