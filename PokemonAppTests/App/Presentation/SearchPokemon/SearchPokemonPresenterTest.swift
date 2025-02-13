@@ -50,7 +50,7 @@ final class SearchPokemonPresenterTest: XCTestCase {
         // Then
         sut.bind(withView: searchPokemonViewControllerSpy)
         sut.viewDidLoad()
-        wait(for: [expectation], timeout: 1.0)
+        _ = XCTWaiter.wait(for: [expectation], timeout: 1.0)
         XCTAssertTrue(isCallShowSections)
     }
     
@@ -70,7 +70,7 @@ final class SearchPokemonPresenterTest: XCTestCase {
         // Then
         sut.bind(withView: searchPokemonViewControllerSpy)
         sut.viewDidLoad()
-        wait(for: [expectation], timeout: 1.0)
+        _ = XCTWaiter.wait(for: [expectation], timeout: 1.0)
         XCTAssertTrue(isCallHideLoadingIndicator)
     }
     
@@ -94,7 +94,7 @@ final class SearchPokemonPresenterTest: XCTestCase {
         // Then
         sut.bind(withView: searchPokemonViewControllerSpy)
         sut.viewDidLoad()
-        wait(for: [expectation], timeout: 1.0)
+        _ = XCTWaiter.wait(for: [expectation], timeout: 1.0)
         XCTAssertTrue(isCallPushToPokemon)
     }
     
@@ -120,7 +120,7 @@ final class SearchPokemonPresenterTest: XCTestCase {
         sut.bind(withView: searchPokemonViewControllerSpy)
         sut.viewDidLoad()
         sut.didSearchPokemon("")
-        wait(for: [expectation], timeout: 1.0)
+        _ = XCTWaiter.wait(for: [expectation], timeout: 1.0)
         XCTAssertTrue(isCallShowSections)
     }
     
@@ -145,7 +145,7 @@ final class SearchPokemonPresenterTest: XCTestCase {
         sut.bind(withView: searchPokemonViewControllerSpy)
         sut.viewDidLoad()
         sut.didSearchPokemon("bulbasaur")
-        wait(for: [expectation], timeout: 1.0)
+        _ = XCTWaiter.wait(for: [expectation], timeout: 1.0)
         XCTAssertTrue(isCallShowSections)
     }
     
@@ -170,7 +170,7 @@ final class SearchPokemonPresenterTest: XCTestCase {
         sut.bind(withView: searchPokemonViewControllerSpy)
         sut.viewDidLoad()
         sut.didsearchBarCancelButton()
-        wait(for: [expectation], timeout: 1.0)
+        _ = XCTWaiter.wait(for: [expectation], timeout: 1.0)
         XCTAssertTrue(isCallShowSections)
     }
 }

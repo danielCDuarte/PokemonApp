@@ -51,7 +51,7 @@ final class DetailPokemonPresenterTest: XCTestCase {
         // Then
         sut.bind(withView: detailPokemonViewControllerSpy)
         sut.viewDidLoad()
-        wait(for: [expectation], timeout: 1.0)
+        _ = XCTWaiter.wait(for: [expectation], timeout: 1.0)
         XCTAssertTrue(isCallShowDetail)
     }
     
@@ -71,7 +71,7 @@ final class DetailPokemonPresenterTest: XCTestCase {
         // Then
         sut.bind(withView: detailPokemonViewControllerSpy)
         sut.viewDidLoad()
-        wait(for: [expectation], timeout: 1.0)
+        _ = XCTWaiter.wait(for: [expectation], timeout: 1.0)
         XCTAssertTrue(isCallHideLoadingIndicator)
     }
 }
