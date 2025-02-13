@@ -27,23 +27,22 @@ class DetailPokemonPresenter: BasePresenter {
     }
     
     override func viewDidLoad() {
-        getDetail(dependencies.pokemon.id)
+        Task {
+            await getDetail(dependencies.pokemon.id)
+        }
     }
     
-    private func getDetail(_ id: Int) {
-        ownView.showLoadingIndicator()
-        Task { [weak self] in
-            guard let self = self else { return }
-            do {
-                let pokemonDetails = try await dependencies.getDetailUseCase.execute(params: id)
-                await MainActor.run {
-                    self.bindDetailPokemon(pokemonDetails)
-                }
-            } catch let error {
-                await MainActor.run {
-                    self.ownView.hideLoadingIndicator()
-                    self.handleException(error: error)
-                }
+    private func getDetail(_ id: Int) async {
+        await MainActor.run { ownView.showLoadingIndicator() }
+        do {
+            let pokemonDetails = try await dependencies.getDetailUseCase.execute(params: id)
+            await MainActor.run {
+                self.bindDetailPokemon(pokemonDetails)
+            }
+        } catch let error {
+            await MainActor.run {
+                self.ownView.hideLoadingIndicator()
+                self.handleException(error: error)
             }
         }
     }

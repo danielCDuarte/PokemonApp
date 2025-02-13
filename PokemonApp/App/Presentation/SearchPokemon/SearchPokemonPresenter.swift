@@ -33,27 +33,26 @@ class SearchPokemonPresenter: BasePresenter {
     }
     
     override func viewDidLoad() {
-        getPokemons()
+        Task {
+            await getPokemons()
+        }
     }
     
-    private func getPokemons() {
-        ownView.showLoadingIndicator()
-        Task { [weak self] in
-            guard let self = self else { return }
-            do {
-                let pokemonsResult = try await dependencies.getPokemonsUseCase.execute(
-                    params: .init(
-                        offset: Constants.offset,
-                        limit: Constants.limit)
-                )
-                await MainActor.run {
-                    self.bindPokemons(pokemonsResult.results)
-                }
-            } catch let error {
-                await MainActor.run {
-                    self.ownView.hideLoadingIndicator()
-                    self.handleException(error: error)
-                }
+    private func getPokemons() async {
+        await MainActor.run { ownView.showLoadingIndicator() }
+        do {
+            let pokemonsResult = try await dependencies.getPokemonsUseCase.execute(
+                params: .init(
+                    offset: Constants.offset,
+                    limit: Constants.limit)
+            )
+            await MainActor.run {
+                self.bindPokemons(pokemonsResult.results)
+            }
+        } catch let error {
+            await MainActor.run {
+                self.ownView.hideLoadingIndicator()
+                self.handleException(error: error)
             }
         }
     }
