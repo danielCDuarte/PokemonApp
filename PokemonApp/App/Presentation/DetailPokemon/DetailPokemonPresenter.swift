@@ -11,7 +11,6 @@ class DetailPokemonPresenter: BasePresenter {
     
     private var pokemonDetails: DetailObject?
     
-    
     struct InputDependencies {
         let pokemon: PokemonObject
         let getDetailUseCase: AnyUseCase< Int, DetailObject>

@@ -18,10 +18,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         self.window = window
         
-        appCoordinator = AppCoordinator(window: window)
+        let container = DIContainer.shared
+        setupDependencies(container)
+        
+        appCoordinator = AppCoordinator(
+            window: window,
+            navigationController: UINavigationController(),
+            container: container
+        )
         appCoordinator?.start()
 
         window.makeKeyAndVisible()
+    }
+    
+    private func setupDependencies(_ container: DIContainerProtocol) {
+        container.register(
+            type: NetworkServiceType.self,
+            component: NetworkService(
+                url: DataConstants.baseUrl,
+                urlSession: URLSession.shared,
+                decoder: JSONDecoder())
+        )
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

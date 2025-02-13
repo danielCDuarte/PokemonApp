@@ -9,15 +9,10 @@ import Foundation
 import UIKit
 
 final public class SearchPokemonDI {
-    static func inject() -> SearchPokemonViewController {
-        //Data
-        let networkService = NetworkService(
-            url: DataConstants.baseUrl,
-            urlSession: URLSession.shared,
-            decoder: JSONDecoder()
-        )
-        
-        let pokemonRepository = PokemonRepositories(networkService: networkService)
+    static func inject(container: DIContainerProtocol) -> SearchPokemonViewController {
+        guard let pokemonRepository: PokemonRepositoriesType = container.resolve() else {
+            fatalError("Required dependencies not found")
+        }
         
         //Domain
         let getPokemonsUseCase = GetPokemonsUseCase(repository: pokemonRepository)

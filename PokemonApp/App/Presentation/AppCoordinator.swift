@@ -9,18 +9,16 @@ import UIKit
 
 class AppCoordinator: BaseCoordinator {
     let window: UIWindow
-    
-    init(window: UIWindow) {
+    init(window: UIWindow, navigationController: UINavigationController, container: DIContainerProtocol) {
         self.window = window
-        let navigationController = UINavigationController()
-        super.init(navigationController: navigationController)
+        super.init(navigationController: navigationController, container: container)
     }
     
     override func start() {
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
         
-        let searchPokemonCoordinator = SearchPokemonCoordinator(navigationController: navigationController)
+        let searchPokemonCoordinator = SearchPokemonCoordinator(navigationController: navigationController, container: container)
         addChildCoordinator(searchPokemonCoordinator)
         searchPokemonCoordinator.start()
         

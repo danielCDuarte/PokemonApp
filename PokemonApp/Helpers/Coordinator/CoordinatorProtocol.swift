@@ -10,6 +10,7 @@ import UIKit
 protocol Coordinator: AnyObject {
     var navigationController: UINavigationController { get set }
     var childCoordinators: [Coordinator] { get set }
+    var container: DIContainerProtocol { get }
     func start()
     func finish()
 }
@@ -17,9 +18,12 @@ protocol Coordinator: AnyObject {
 class BaseCoordinator: Coordinator {
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator] = []
+    var container: DIContainerProtocol
     
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController,
+         container: DIContainerProtocol) {
         self.navigationController = navigationController
+        self.container = container
     }
     
     func start() {

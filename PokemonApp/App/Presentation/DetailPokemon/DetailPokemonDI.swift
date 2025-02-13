@@ -8,14 +8,11 @@
 import UIKit
 
 final public class DetailPokemonDI {
-    static func inject(_ pokemon: PokemonObject) -> DetailPokemonViewController {
-        //Data
-        let networkService = NetworkService(
-            url: DataConstants.baseUrl,
-            urlSession: URLSession.shared,
-            decoder: JSONDecoder()
-        )
-        let pokemonRepository = PokemonRepositories(networkService: networkService)
+    static func inject(_ pokemon: PokemonObject, container: DIContainerProtocol) -> DetailPokemonViewController {
+        
+        guard let pokemonRepository: PokemonRepositoriesType = container.resolve() else {
+            fatalError("Required dependencies not found")
+        }
         
         //Domain
         let getDetailUseCase = GetDetailUseCase(repository: pokemonRepository)
