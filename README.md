@@ -53,7 +53,7 @@ Clean Architecture con el patron arquitectonico VIPER
 
 # Cobertura de Código
   
-  Cobertura general: 90%
+  Cobertura general: 86%
   ![Screenshot 2025-02-13 at 5 43 28 PM](https://github.com/user-attachments/assets/82ab463c-07d3-4c06-9223-671ee6321537)
 
 # Instrucciones de Instalación
