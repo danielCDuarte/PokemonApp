@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class InfoPokemonCollectionViewCell: GenericCollectionViewCell<InfoDetailObject> {
     
@@ -115,16 +116,25 @@ final class InfoPokemonCollectionViewCell: GenericCollectionViewCell<InfoDetailO
     
     private func setupImage(with url: String) {
         guard let urlValidate = URL(string: url) else { return }
-        Task { [weak self] in
-            guard let self = self else { return }
-            do {
-                if let image = try await imageView.downloadImage(from: urlValidate) {
-                    self.imageView.image = image
-                }
-            } catch {
-                print("Error loading image: \(error)")
-            }
-        }
+        imageView.kf.indicatorType = .activity
+        let processor = DownsamplingImageProcessor(size: CGSize(width: 200, height: 200))
+        
+        imageView.kf.setImage(
+            with: .network(urlValidate),
+            placeholder: UIImage(named: "placeholder"),
+            options: [
+                .processor(processor),
+                .scaleFactor(UIScreen.main.scale),
+                .transition(.fade(0.2)),
+                .cacheOriginalImage
+            ]
+        )
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.kf.cancelDownloadTask()
+        imageView.image = nil
     }
     
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
