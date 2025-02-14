@@ -78,6 +78,7 @@ Clean Architecture con el patron arquitectonico VIPER
 - Inyeccion de dependencias
 - POO
 - Patron Coordinator
+- Vistas codificadas (NSLayoutConstraint)
 
 # PrintScreen App
 
