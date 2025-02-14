@@ -28,7 +28,7 @@ class DetailPokemonViewControllerTest: XCTestCase {
         try super.tearDownWithError()
     }
     
-    func testInitialEmptyState() {
+    func testInitialEmptyStateDetailPokemon() {
         assertSnapshot(of: sut, as: .image)
     }
     

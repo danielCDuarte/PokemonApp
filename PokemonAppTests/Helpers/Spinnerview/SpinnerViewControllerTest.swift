@@ -23,7 +23,7 @@ class SpinnerViewControllerTest: XCTestCase {
         try super.tearDownWithError()
     }
     
-    func testInitialEmptyState() {
+    func testInitialEmptyStateSpinnerView() {
         assertSnapshot(of: sut, as: .image)
     }
 }
